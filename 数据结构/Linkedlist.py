@@ -23,6 +23,11 @@ class LinkedList(object):
             curr = curr.next
         return counter
 
+    def addFirst(self, data):
+        node = Node(data)
+        node.next = self.head
+        self.head = node
+
     def append(self, data):
         # 若数据为空 ，则返回 None
         if data is None:
@@ -39,6 +44,15 @@ class LinkedList(object):
             curr_node = curr_node.next
         curr_node.next = node
         return node
+
+    # 向任意位置插入一个数据
+    def insert(self, index, data):
+        prev_node = self.head
+        for i in range(index):
+            prev_node = prev_node.next
+        node = Node(data)
+        node.next = prev_node.next
+        prev_node.next = node
 
     # 查找某个节点，时间复杂度为 O(n)
     def search(self, data):
@@ -60,6 +74,16 @@ class LinkedList(object):
 
         return '这个数不存在'
 
+    def getItem(self, index):
+        i = 0
+        curr_node = self.head
+        while curr_node is not None:
+            if i == index:
+                return curr_node.data
+            curr_node = curr_node.next
+            i += 1
+        return None
+
 
 if __name__ == '__main__':
     # node1 = Node(1)
@@ -76,4 +100,13 @@ if __name__ == '__main__':
     for i in range(9):
         linklist.append(i)
     print(linklist.__len__())
-    print(linklist.getIndex(9))
+    linklist.addFirst(10)
+    print(linklist.getIndex(10))
+    print(linklist.getItem(0))
+    print('='*30)
+    linklist.insert(5, 50)
+    curr = linklist.head
+    while curr is not None:
+        print(curr.data)
+        curr = curr.next
+
